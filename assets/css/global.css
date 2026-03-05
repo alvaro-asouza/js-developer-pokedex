@@ -1,24 +1,75 @@
-* {
-    font-family: 'Roboto', sans-serif;
-    box-sizing: border-box;
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
+:root {
+  --red: #e63946;
+  --dark: #1a1a2e;
+  --gray-bg: #f0f2f5;
+  --white: #ffffff;
+  --radius: 16px;
+  --shadow: 0 4px 20px rgba(0,0,0,0.1);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.2);
+  --font: 'Poppins', sans-serif;
+
+
+  --normal:   #A8A77A;
+  --fire:     #EE8130;
+  --water:    #6390F0;
+  --electric: #F7D02C;
+  --grass:    #7AC74C;
+  --ice:      #96D9D6;
+  --fighting: #C22E28;
+  --poison:   #A33EA1;
+  --ground:   #E2BF65;
+  --flying:   #A98FF3;
+  --psychic:  #F95587;
+  --bug:      #A6B91A;
+  --rock:     #B6A136;
+  --ghost:    #735797;
+  --dragon:   #6F35FC;
+  --dark:     #705746;
+  --steel:    #B7B7CE;
+  --fairy:    #D685AD;
+}
+
+html { scroll-behavior: smooth; }
 
 body {
-    background-color: #f6f8fc;
+  font-family: var(--font);
+  background: var(--gray-bg);
+  color: var(--dark);
+  min-height: 100vh;
 }
 
-.content {
-    width: 100vw;
-    height: 100vh;
-    padding: 1rem;
-    background-color: #fff;
+.type {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  color: white;
+  letter-spacing: 0.4px;
 }
 
-@media screen and (min-width: 992px) {
-    .content {
-        max-width: 992px;
-        height: auto;
-        margin: 1rem auto;
-        border-radius: 1rem;
-    }
-}
+.type.normal   { background: var(--normal); }
+.type.fire     { background: var(--fire); }
+.type.water    { background: var(--water); }
+.type.electric { background: var(--electric); color: #333; }
+.type.grass    { background: var(--grass); }
+.type.ice      { background: var(--ice); color: #333; }
+.type.fighting { background: var(--fighting); }
+.type.poison   { background: var(--poison); }
+.type.ground   { background: var(--ground); color: #333; }
+.type.flying   { background: var(--flying); }
+.type.psychic  { background: var(--psychic); }
+.type.bug      { background: var(--bug); }
+.type.rock     { background: var(--rock); }
+.type.ghost    { background: var(--ghost); }
+.type.dragon   { background: var(--dragon); }
+.type.dark     { background: #705746; }
+.type.steel    { background: var(--steel); color: #333; }
+.type.fairy    { background: var(--fairy); }
