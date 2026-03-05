@@ -1,46 +1,137 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokedex</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokédex</title>
 
-    <!-- Normalize CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-        integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Font Roboto -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;700&display=swap" rel="stylesheet">
-
-    <!-- Nosso CSS -->
-    <link rel="stylesheet" href="/assets/css/global.css">
-    <link rel="stylesheet" href="/assets/css/pokedex.css">
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/pokedex.css">
 </head>
-
 <body>
-    <section class="content">
-        <h1>Pokedex</h1>
 
-        <ol id="pokemonList" class="pokemons">
-            <!-- ..... Pokemons here ..... -->
-        </ol>
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/9/98/International_Pok%C3%A9mon_logo.svg"
+          alt="Pokémon" class="header-logo">
+      </div>
+      <div class="header-search">
+        <span class="search-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Nome ou número..."
+          autocomplete="off">
+        <button id="clearSearch" class="clear-search" title="Limpar">✕</button>
+      </div>
+    </div>
 
-        <div class="pagination">
-            <button id="loadMoreButton" type="button">
-                Load More
-            </button>
+    <!-- FILTRO POR TIPO -->
+    <div class="type-filter-bar" id="typeFilterBar">
+      <button class="type-filter-btn active" data-type="all">Todos</button>
+      <button class="type-filter-btn" data-type="fire">🔥 Fire</button>
+      <button class="type-filter-btn" data-type="water">💧 Water</button>
+      <button class="type-filter-btn" data-type="grass">🌿 Grass</button>
+      <button class="type-filter-btn" data-type="electric">⚡ Electric</button>
+      <button class="type-filter-btn" data-type="psychic">🔮 Psychic</button>
+      <button class="type-filter-btn" data-type="ice">❄️ Ice</button>
+      <button class="type-filter-btn" data-type="dragon">🐉 Dragon</button>
+      <button class="type-filter-btn" data-type="dark">🌑 Dark</button>
+      <button class="type-filter-btn" data-type="fairy">🌸 Fairy</button>
+      <button class="type-filter-btn" data-type="normal">⬜ Normal</button>
+      <button class="type-filter-btn" data-type="fighting">🥊 Fighting</button>
+      <button class="type-filter-btn" data-type="flying">🦅 Flying</button>
+      <button class="type-filter-btn" data-type="poison">☠️ Poison</button>
+      <button class="type-filter-btn" data-type="ground">🌍 Ground</button>
+      <button class="type-filter-btn" data-type="rock">🪨 Rock</button>
+      <button class="type-filter-btn" data-type="bug">🐛 Bug</button>
+      <button class="type-filter-btn" data-type="ghost">👻 Ghost</button>
+      <button class="type-filter-btn" data-type="steel">⚙️ Steel</button>
+    </div>
+  </header>
+
+  <main class="content">
+    <div id="resultCount" class="result-count"></div>
+    <ol id="pokemonList" class="pokemons"></ol>
+
+    <div id="emptyState" class="empty-state" style="display:none;">
+      <span class="empty-icon">🔍</span>
+      <p>Nenhum Pokémon encontrado.</p>
+    </div>
+
+    <div class="pagination">
+      <button id="loadMoreButton" type="button" class="load-more-btn">
+        <span>Carregar mais</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+    </div>
+  </main>
+
+  <div id="pokemonModal" class="modal-overlay" role="dialog" aria-modal="true" style="display:none;">
+    <div class="modal-box" id="modalBox">
+      <button class="modal-close" id="modalClose" title="Fechar">✕</button>
+
+      <div class="modal-header" id="modalHeader">
+        <div class="modal-header-text">
+          <span class="modal-number" id="modalNumber"></span>
+          <h2 class="modal-name" id="modalName"></h2>
+          <div class="modal-types" id="modalTypes"></div>
         </div>
-    </section>
+        <img class="modal-img" id="modalImg" src="" alt="">
+      </div>
 
-    <!-- Nosso JS -->
-    <script src="/assets/js/pokemon-model.js"></script>
-    <script src="/assets/js/poke-api.js"></script>
-    <script src="/assets/js/main.js"></script>
+      <div class="modal-body">
+        <p class="modal-flavor" id="modalFlavor"></p>
+
+        <div class="modal-info-grid">
+          <div class="info-card">
+            <span class="info-label">Altura</span>
+            <span class="info-val" id="modalHeight"></span>
+          </div>
+          <div class="info-card">
+            <span class="info-label">Peso</span>
+            <span class="info-val" id="modalWeight"></span>
+          </div>
+          <div class="info-card">
+            <span class="info-label">Power Total</span>
+            <span class="info-val accent" id="modalPower"></span>
+          </div>
+          <div class="info-card">
+            <span class="info-label">Exp. Base</span>
+            <span class="info-val" id="modalExp"></span>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4 class="modal-section-title" id="abilitiesTitle">Habilidades</h4>
+          <div class="modal-abilities" id="modalAbilities"></div>
+        </div>
+
+        <div class="modal-section">
+          <h4 class="modal-section-title" id="statsTitle">Estatísticas</h4>
+          <div id="modalStats"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/pokemon-model.js"></script>
+  <script src="assets/js/poke-api.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
-
 </html>
